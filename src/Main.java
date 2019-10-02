@@ -1,3 +1,16 @@
+/*
+Lenguajes de Programacion 2019-2
+
+Analizador Lexico
+
+Autores:
+
+Laura Morales
+Jhon Alexander Sedano
+
+*/
+
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -6,7 +19,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import java.util.regex.Matcher;
 
 
 public class Main {
