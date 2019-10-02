@@ -24,18 +24,19 @@ import java.util.regex.Pattern;
 public class Main {
 
     static String[] resWords = new String[]{ "af", "and", "binding","by", "body", "cap", "coenter", "col", "create","destroy", "do",
-                                             "else", "end", "external", "fa", "fi", "file", "final", "get", "getarg", "global", "if",
-                                             "import", "int", "mod", "new","noop", "oc", "op", "or","procedure", "process", "read",
-                                             "real", "ref", "res", "resource", "returns", "scanf", "sem", "send","sprintf", "st",
-                                             "stop", "to", "val", "var", "write", "writes"};
+            "else", "end", "external", "fa", "fi", "file", "final", "get", "getarg", "global", "if",
+            "import", "int", "mod", "new","noop", "oc", "op", "or","procedure", "process", "read",
+            "real", "ref", "res", "resource", "returns", "scanf", "sem", "send","sprintf", "st",
+            "stop", "to", "val", "var", "write", "writes","receive","char","reply","next","string",
+            "bool","ni","co","proc"};
 
     static String[] symbols = new String[]{"{","}",":=",":",",","[","]",";","(",")","+","++","<","<=",">",">=","!=",":=:","->",
-                                           "-", "[]", "=", "%", ".", "|", "/", "*"};
+            "-", "[]", "=", "%", ".", "|", "/", "*"};
 
     static String[] values = new String[]{"tk_llave_i", "tk_llave_d", "tk_asig", "tk_dos_puntos", "tk_coma", "tk_cor_izq",
-                                          "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_menorque",
-                                          "tk_menor_igual", "tk_mayorque", "tk_mayor_igual", "tk_distinto", "tk_swap", "tk_ejecuta",
-                                          "tk_menos", "tk_separa", "tk_igual", "tk_mod","tk_punto","tk_or", "tk_div", "tk_multi"};
+            "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_menorque",
+            "tk_menor_igual", "tk_mayorque", "tk_mayor_igual", "tk_distinto", "tk_swap", "tk_ejecuta",
+            "tk_menos", "tk_separa", "tk_igual", "tk_mod","tk_punto","tk_or", "tk_div", "tk_multi"};
 
     static HashSet<String> h = new HashSet<String>();
     static HashMap<String, String> mp = new HashMap<String, String>();
@@ -101,7 +102,7 @@ public class Main {
         try {
 
             File file =
-                    new File("test2.txt");
+                    new File("4.txt");
             Scanner sc = new Scanner(file);
 
             String line;
@@ -128,10 +129,10 @@ public class Main {
                                 i = line.length();
                                 break;
                             }
-                            else if(line.charAt(i) == ' ')
+                            else if(line.charAt(i) == ' ' || Pattern.matches("[\t]", character)) {
                                 break;
 
-                            else if(Pattern.matches("[a-zA-Z]", character)) {
+                            }else if(Pattern.matches("[a-zA-Z]", character)) {
                                 st = '2';
                                 break;
                             }else if(line.charAt(i) >='0' && line.charAt(i) <= '9'){
@@ -161,7 +162,8 @@ public class Main {
                                 t.printTok();
                                 break;
                             }else{
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:"+start);
+                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:"+start+")");
+                                System.exit(0);
                             }
                         case '2':
                             if(line.charAt(i) == '#'){
@@ -224,8 +226,8 @@ public class Main {
                         case '4':
                             if(line.charAt(i) == '\n'){
                                 column = start + 1;
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start);
-                                break;
+                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                System.exit(0);
                             }else if(line.charAt(i) == '"'){
                                 Token t = new Token(4, line.substring(start , i + 1), row, start + 1);
                                 t.printTok();
@@ -240,7 +242,8 @@ public class Main {
                                     Token t = new Token(2, line.substring(start, i), row, start + 1);
                                     t.printTok();
                                 }else{
-                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start);
+                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                    System.exit(0);
                                 }
                                 i = line.length();
                                 break;
@@ -266,7 +269,8 @@ public class Main {
                                     break;
                                 }else{
                                     column--;
-                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start);
+                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                    System.exit(0);
                                 }
 
                             }
@@ -277,11 +281,13 @@ public class Main {
                                 if(line.substring(start, i).length() == 3) {//encontró :=:
                                     Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
                                     t.printTok();
+                                    break;
                                 }else{// encontró ::
                                     Token t = new Token(2, String.valueOf(line.charAt(i)), row, start + 1);
                                     Token t2 = new Token(2, String.valueOf(line.charAt(i)), row, start + 1);
                                     t.printTok();
                                     t2.printTok();
+                                    break;
                                 }
                             }else{
                                 Token t = new Token(2, line.substring(start, i), row, start + 1);
@@ -298,7 +304,8 @@ public class Main {
                                 break;
                             }else{
                                 column--;
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start);
+                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                System.exit(0);
                             }
                         case '8':
                             if(line.charAt(i) == ']'){
