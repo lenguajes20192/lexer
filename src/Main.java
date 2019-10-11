@@ -285,18 +285,12 @@ public class Main {
                         case '6':
                             if(line.charAt(i) == '='){
                                 break;
-                            }else if(line.charAt(i) == ':'){
-                                if(line.substring(start, i).length() == 3) {//encontró :=:
-                                    Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
-                                    t.printTok();
-                                    break;
-                                }else{// encontró ::
-                                    Token t = new Token(2, String.valueOf(line.charAt(i)), row, start + 1);
-                                    Token t2 = new Token(2, String.valueOf(line.charAt(i)), row, start + 1);
-                                    t.printTok();
-                                    t2.printTok();
-                                    break;
-                                }
+                            }else if(line.charAt(i) == ':' && line.charAt(i - 1) == '='){// :=: found
+                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                                t.printTok();
+                                st = '1';
+                                break;
+
                             }else{
                                 Token t = new Token(2, line.substring(start, i), row, start + 1);
                                 t.printTok();
