@@ -48,7 +48,6 @@ public class Main {
         public String lexeme;
         public int type;
 
-
         public Token(int type, String lexemeValue, int rowValue, int columnValue){
             this.type= type;
             lexeme = lexemeValue;
@@ -96,13 +95,18 @@ public class Main {
         }
     }
 
+    static void printError(int row, int column){
+
+        System.out.println(">>>Error_lexico(linea:" + row + ",posicion:" + (column + 1) + ")");
+
+    }
 
     public static void main(String[] args) {
         init();
         try {
 
             File file =
-                    new File("4.txt");
+                    new File("2.txt");
             Scanner sc = new Scanner(file);
 
             String line;
@@ -145,7 +149,7 @@ public class Main {
                             }else if(line.charAt(i) == ':') {
                                 st = '6';
                                 break;
-                            }else if(line.charAt(i) == '<'|| line.charAt(i) == '>' //caracteres que pueden ir solos o acompañados
+                            }else if(line.charAt(i) == '<' || line.charAt(i) == '>' //caracteres que pueden ir solos o acompañados
                                     || line.charAt(i) == '-' || line.charAt(i) == '+' || line.charAt(i) == '='){
                                 st = '5';
                                 break;
@@ -162,7 +166,7 @@ public class Main {
                                 t.printTok();
                                 break;
                             }else{
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:"+start+")");
+                                printError(row, start);
                                 System.exit(0);
                             }
                         case '2':
@@ -200,6 +204,8 @@ public class Main {
                                 break;
 
                             }else if(line.charAt(i) == '.'){//90.88.00
+                                //System.out.println(line.charAt(i));
+                                //System.out.println(line.substring(start, i));
                                 if(line.substring(start, i).contains(".")) {
                                     i--;
                                     st = '1';
@@ -226,7 +232,7 @@ public class Main {
                         case '4':
                             if(line.charAt(i) == '\n'){
                                 column = start + 1;
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                printError(row, start);
                                 System.exit(0);
                             }else if(line.charAt(i) == '"'){
                                 Token t = new Token(4, line.substring(start , i + 1), row, start + 1);
@@ -242,7 +248,7 @@ public class Main {
                                     Token t = new Token(2, line.substring(start, i), row, start + 1);
                                     t.printTok();
                                 }else{
-                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                    printError(row, start);
                                     System.exit(0);
                                 }
                                 i = line.length();
@@ -269,7 +275,7 @@ public class Main {
                                     break;
                                 }else{
                                     column--;
-                                    System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                    printError(row, start);
                                     System.exit(0);
                                 }
 
@@ -304,7 +310,7 @@ public class Main {
                                 break;
                             }else{
                                 column--;
-                                System.out.println(">>>Error_lexico(linea:"+ row +",posicion:" + start+")");
+                                printError(row, start);
                                 System.exit(0);
                             }
                         case '8':
