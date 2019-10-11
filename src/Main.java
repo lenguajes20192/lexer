@@ -106,7 +106,7 @@ public class Main {
         try {
 
             File file =
-                    new File("2.txt");
+                    new File("test2.txt");
             Scanner sc = new Scanner(file);
 
             String line;
@@ -207,6 +207,8 @@ public class Main {
                                 //System.out.println(line.charAt(i));
                                 //System.out.println(line.substring(start, i));
                                 if(line.substring(start, i).contains(".")) {
+                                    Token t = new Token(3, line.substring(start , i), row, start + 1);
+                                    t.printTok();
                                     i--;
                                     st = '1';
                                     break;
