@@ -31,13 +31,15 @@ public class Main {
             "bool","ni","co","proc"};
 
     static String[] symbols = new String[]{"{","}",":=",":",",","[","]",";","(",")","+","++","<","<=",">",">=","!=",":=:","->",
-            "-", "[]", "=", "%", ".", "|", "/", "*", "<<", ">>", "||", "**"};
+            "-", "[]", "=", "%", ".", "|", "/", "*", "<<", ">>", "||", "**", "<<:=", ">>:=", "||:=", "**:=", "*:=", "/:=", "+:=",
+            "-:=", "%:=", "%", "&:=", "&"};
 
     static String[] values = new String[]{"tk_llave_i", "tk_llave_d", "tk_asig", "tk_dos_puntos", "tk_coma", "tk_cor_izq",
             "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_menorque",
             "tk_menor_igual", "tk_mayorque", "tk_mayor_igual", "tk_distinto", "tk_swap", "tk_ejecuta",
             "tk_menos", "tk_separa", "tk_igual", "tk_mod","tk_punto","tk_or", "tk_div", "tk_multi", "tk_lshift", "tk_rshift",
-            "tk_concat", "tk_exp"};
+            "tk_concat", "tk_exp", "tk_lsasig", "tk_rsasig", "tk_concasig", "tk_expasig", "tk_mulasig", "tk_divasig", "tk_sumasig",
+            "tk_resasig", "tk_remasig", "tk_rem", "tk_andasig", "tk_and"};
 
     static HashSet<String> h = new HashSet<String>();
     static HashMap<String, String> mp = new HashMap<String, String>();
@@ -152,7 +154,8 @@ public class Main {
                                 break;
                             }else if(line.charAt(i) == '<' || line.charAt(i) == '>' //caracteres que pueden ir solos o acompañados
                                     || line.charAt(i) == '-' || line.charAt(i) == '+' || line.charAt(i) == '='
-                                    || line.charAt(i) == '|' || line.charAt(i) == '*'){
+                                    || line.charAt(i) == '|' || line.charAt(i) == '*' || line.charAt(i) == '/'
+                                    || line.charAt(i) == '&' || line.charAt(i) == '%'){
                                 st = '5';
                                 break;
 
@@ -265,29 +268,30 @@ public class Main {
                                 Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
                                 t.printTok();
                                 break;
-                            }else if(line.charAt(i -1 ) == '-' && line.charAt(i) == '>') {// tk_ejecuta
+                            }else if(line.charAt(i -1) == '-' && line.charAt(i) == '>') {// tk_ejecuta
                                 Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
                                 t.printTok();
                                 st = '1';
                                 break;
-                            }else if(line.charAt(i) == '>'&& line.charAt(i - 1) == '>') {//right shift
-                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                            }else if(line.charAt(i) == '>'&& line.charAt(i - 1) == '>' || (line.charAt(i) == '<'&& line.charAt(i - 1) == '<')
+                                    || (line.charAt(i) == '|' && line.charAt(i - 1) == '|') || (line.charAt(i) == '*' && line.charAt(i - 1) == '*')) {//right shift
+                                if (line.charAt(i + 1) == ':' && line.charAt(i + 2) == '=') {
+
+                                    Token t = new Token(2, line.substring(start, i + 3), row, start + 1);
+                                    t.printTok();
+                                    i += 2;
+                                    st = '1';
+                                    break;
+                                } else {//prints concat, shifts and exp
+                                    Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                                    t.printTok();
+                                    st = '1';
+                                    break;
+                                }
+                            }else if(line.charAt(i) == ':' && line.charAt(i + 1) == '='){
+                                Token t = new Token(2, line.substring(start, i + 2), row, start + 1);
                                 t.printTok();
-                                st = '1';
-                                break;
-                            }else if(line.charAt(i) == '<' && line.charAt(i - 1) == '<') {//left shift
-                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
-                                t.printTok();
-                                st = '1';
-                                break;
-                            }else if(line.charAt(i) == '|' && line.charAt(i - 1) == '|') {//concat
-                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
-                                t.printTok();
-                                st = '1';
-                                break;
-                            }else if(line.charAt(i) == '*' && line.charAt(i - 1) == '*'){//exp
-                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
-                                t.printTok();
+                                i++;
                                 st = '1';
                                 break;
                             }else{
@@ -307,12 +311,16 @@ public class Main {
                         case '6':
                             if(line.charAt(i) == '='){
                                 break;
-                            }else if(line.charAt(i) == ':' && line.charAt(i - 1) == '='){// :=: found
+                            }else if(line.charAt(i) == ':' && line.charAt(i - 1) == '=') {// :=: found
                                 Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
                                 t.printTok();
                                 st = '1';
                                 break;
-
+                            }else if ((line.charAt(i - 1) == '*' && line.charAt(i - 1) == '=')){
+                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                                t.printTok();
+                                st = '1';
+                                break;
                             }else{
                                 Token t = new Token(2, line.substring(start, i), row, start + 1);
                                 t.printTok();
@@ -344,6 +352,7 @@ public class Main {
                                 st = '1';
                                 break;
                             }
+
                     }
                 }
                 row++;
