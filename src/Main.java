@@ -30,12 +30,12 @@ public class Main {
             "stop", "to", "val", "var", "write", "writes","receive","char","reply","next","string",
             "bool","ni","co","proc"};
 
-    static String[] symbols = new String[]{"{","}",":=",":",",","[","]",";","(",")","+","++","<","<=",">",">=","!=",":=:","->",
+    static String[] symbols = new String[]{"{","}",":=",":",",","[","]",";","(",")","+","++","--","<","<=",">",">=","!=",":=:","->",
             "-", "[]", "=", "%", ".", "|", "/", "*", "<<", ">>", "||", "**", "<<:=", ">>:=", "||:=", "**:=", "*:=", "/:=", "+:=",
             "-:=", "%:=", "%", "&:=", "&", "|:="};
 
     static String[] values = new String[]{"tk_llave_i", "tk_llave_d", "tk_asig", "tk_dos_puntos", "tk_coma", "tk_cor_izq",
-            "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_menorque",
+            "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_decr", "tk_menorque",
             "tk_menor_igual", "tk_mayorque", "tk_mayor_igual", "tk_distinto", "tk_swap", "tk_ejecuta",
             "tk_menos", "tk_separa", "tk_igual", "tk_mod","tk_punto","tk_or", "tk_div", "tk_multi", "tk_lshift", "tk_rshift",
             "tk_concat", "tk_exp", "tk_lsasig", "tk_rsasig", "tk_concasig", "tk_expasig", "tk_mulasig", "tk_divasig", "tk_sumasig",
@@ -269,6 +269,16 @@ public class Main {
                                 t.printTok();
                                 break;
                             }else if(line.charAt(i -1) == '-' && line.charAt(i) == '>') {// tk_ejecuta
+                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                                t.printTok();
+                                st = '1';
+                                break;
+                            }else if(line.charAt(i) == '+' && line.charAt(i - 1) == '+') {
+                                Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
+                                t.printTok();
+                                st = '1';
+                                break;
+                            }else if(line.charAt(i) == '-' && line.charAt(i - 1) == '-'){
                                 Token t = new Token(2, line.substring(start, i + 1), row, start + 1);
                                 t.printTok();
                                 st = '1';
