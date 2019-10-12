@@ -32,14 +32,14 @@ public class Main {
 
     static String[] symbols = new String[]{"{","}",":=",":",",","[","]",";","(",")","+","++","<","<=",">",">=","!=",":=:","->",
             "-", "[]", "=", "%", ".", "|", "/", "*", "<<", ">>", "||", "**", "<<:=", ">>:=", "||:=", "**:=", "*:=", "/:=", "+:=",
-            "-:=", "%:=", "%", "&:=", "&"};
+            "-:=", "%:=", "%", "&:=", "&", "|:="};
 
     static String[] values = new String[]{"tk_llave_i", "tk_llave_d", "tk_asig", "tk_dos_puntos", "tk_coma", "tk_cor_izq",
             "tk_cor_der", "tk_punto_y_coma", "tk_par_izq", "tk_par_der", "tk_suma", "tk_incr", "tk_menorque",
             "tk_menor_igual", "tk_mayorque", "tk_mayor_igual", "tk_distinto", "tk_swap", "tk_ejecuta",
             "tk_menos", "tk_separa", "tk_igual", "tk_mod","tk_punto","tk_or", "tk_div", "tk_multi", "tk_lshift", "tk_rshift",
             "tk_concat", "tk_exp", "tk_lsasig", "tk_rsasig", "tk_concasig", "tk_expasig", "tk_mulasig", "tk_divasig", "tk_sumasig",
-            "tk_resasig", "tk_remasig", "tk_rem", "tk_andasig", "tk_and"};
+            "tk_resasig", "tk_remasig", "tk_rem", "tk_andasig", "tk_and", "tk_orasig"};
 
     static HashSet<String> h = new HashSet<String>();
     static HashMap<String, String> mp = new HashMap<String, String>();
